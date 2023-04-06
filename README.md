@@ -163,7 +163,7 @@ Note that we're using the `validation` property of each field in the `schema` pr
 
 Use Formik instead of react-hook-form and Yup schema form validation
 
-### What is `Formik`?
+### What is Formik?
 
 `Formik` is a library for managing forms in React. It uses controlled components, which means that it stores the form data in state. `Formik` provides a set of components and hooks to help you manage form state, validation, and submission.
 

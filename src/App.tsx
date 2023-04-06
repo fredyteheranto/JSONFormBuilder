@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import logo from './logo.svg'
+import FormBuilder from './FormBuilder'
+import { schema } from './schema'
 
-function App() {
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="flex h-screen flex-col justify-between lg:container lg:mx-auto">
+      <header className="flex pb-3 lg:mb-3 lg:border-b w-full items-center justify-between">
+        <img src={logo} className={'max-w-[120px]'} alt="logo"/>
+        <h1 className={'text-5xl font-bold text-gray-500'}>
+          React JSON Form Builder
+        </h1>
       </header>
+      <main>
+        <FormBuilder schema={schema}/>
+      </main>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
