@@ -1,47 +1,64 @@
-import React from 'react'
-import { Formik, Field, Form } from 'formik'
-import * as yup from 'yup'
+import React, { type FC, type ReactElement } from 'react'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+import { type NumberSchema, type StringSchema } from 'yup'
 import Button from './Button'
 
-const FormBuilder = ({ schema }) => {
-  const validationSchema = yup.object().shape(
-    schema.fields.reduce((schemaObj, field) => {
-      schemaObj[field.name] = field.validation || yup.string()
-      return schemaObj
-    }, {})
+interface FormField {
+  name: string
+  label: string
+  type: string
+  value?: string | number
+  validation?: StringSchema | NumberSchema
+}
+
+interface Props {
+  fields: FormField[]
+  submitForm: (values: any) => void
+}
+
+const FormBuilder: FC<Props> = ({ fields, submitForm }) => {
+  const initialValues = fields.reduce(
+    (valuesObj, field) => ({ ...valuesObj, [field.name]: '' }),
+    {}
   )
 
-  const initialValues = schema.fields.reduce((valuesObj, field) => {
-    valuesObj[field.name] = field.value || ''
-    return valuesObj
-  }, {})
+  const validationSchema = Yup.object().shape(
+    fields.reduce(
+      (schemaObj, field) => ({
+        ...schemaObj,
+        [field.name]: field.validation ?? Yup.string()
+      }),
+      {}
+    )
+  )
 
-  const onSubmit = (values) => {
-    console.log(values)
+  const onSubmit = (values: any): void => {
+    submitForm(values)
   }
 
-  const renderField = (field) => {
+  const renderField = (field: FormField): ReactElement | null => {
     switch (field.type) {
       case 'text':
         return (
-          <div>
+          <div key={field.name}>
             <label>{field.label}</label>
             <Field
               type="text"
               name={field.name}
             />
-            <ErrorMessage name={field.name}/>
+            <ErrorMessage name={field.name} />
           </div>
         )
       case 'number':
         return (
-          <div>
+          <div key={field.name}>
             <label>{field.label}</label>
             <Field
               type="number"
               name={field.name}
             />
-            <ErrorMessage name={field.name}/>
+            <ErrorMessage name={field.name} />
           </div>
         )
       // Add additional field types as needed
@@ -56,9 +73,9 @@ const FormBuilder = ({ schema }) => {
       onSubmit={onSubmit}
       validationSchema={validationSchema}
     >
-      {({ errors }) => (
+      {() => (
         <Form>
-          {schema.fields.map((field) => renderField(field))}
+          {fields.map((field) => renderField(field))}
           <Button type="submit">Submit</Button>
         </Form>
       )}

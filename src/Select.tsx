@@ -33,7 +33,7 @@ const Select = forwardRef<Ref, SelectProps>((props, ref) => {
 
   return (
     <>
-      {label && (
+      {(label != null) && (
         <label
           htmlFor={id}
           className={'mb-2 block text-sm font-medium text-gray-800'}
@@ -53,7 +53,7 @@ const Select = forwardRef<Ref, SelectProps>((props, ref) => {
         )}
         {...restProps}
       />
-      {message && (
+      {Boolean(message) && (
         <span
           className={classNames('mb-2 block text-sm font-medium', {
             'text-red-700': error

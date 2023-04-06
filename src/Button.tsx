@@ -42,7 +42,7 @@ const Button = (props: Props): ReactElement => {
 
   return (
     <>
-      {(href !== '')
+      {(href != null)
         ? (
           <a href={href} className={classNames(style, className)}>
             {children}
