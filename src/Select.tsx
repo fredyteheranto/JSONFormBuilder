@@ -1,7 +1,7 @@
 import React, { type FC, forwardRef, type OptionHTMLAttributes, type SelectHTMLAttributes } from 'react'
 import classNames from 'classnames'
 
-type SelectProps = {
+export type SelectProps = {
   id: string
   label?: string | null
   message?: string | false

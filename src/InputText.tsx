@@ -1,7 +1,7 @@
 import React, { forwardRef, type InputHTMLAttributes } from 'react'
 import classNames from 'classnames'
 
-type Props = {
+export type InputTextProps = {
   type: 'email' | 'password' | 'search' | 'tel' | 'text' | 'url'
   id: string
   label?: string | null
@@ -14,7 +14,7 @@ type Props = {
 
 type Ref = HTMLInputElement
 
-const InputText = forwardRef<Ref, Props>((props, ref) => {
+const InputText = forwardRef<Ref, InputTextProps>((props, ref) => {
   const {
     type,
     id,
