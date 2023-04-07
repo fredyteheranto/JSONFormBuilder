@@ -1,5 +1,7 @@
 # React JSON Form Builder
 
+See example page: [https://alexanderweigelt.github.io/JSONFormBuilder/](https://alexanderweigelt.github.io/JSONFormBuilder/)
+
 ## The Task
 
 1. Create a new React component called `FormBuilder` that will be responsible for rendering the form fields based on the provided data schema.
