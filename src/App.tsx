@@ -11,7 +11,7 @@ const App: FC = () => {
       name: 'firstName',
       label: 'First Name',
       type: 'text',
-      className: 'col-span-12 lg:col-span-6',
+      col: 6,
       fullWidth: true,
       validation: yup.string().required('First name is required')
     },
@@ -21,7 +21,7 @@ const App: FC = () => {
       name: 'lastName',
       label: 'Last Name',
       type: 'text',
-      className: 'col-span-12 lg:col-span-6',
+      col: 6,
       fullWidth: true,
       validation: yup.string().required('Last name is required')
     },
@@ -31,7 +31,7 @@ const App: FC = () => {
       name: 'streetName',
       label: 'Street Name',
       type: 'text',
-      className: 'col-span-12 lg:col-span-10',
+      col: 10,
       fullWidth: true,
       validation: yup.string().required('Street name is required')
     },
@@ -41,7 +41,7 @@ const App: FC = () => {
       name: 'streetNumber',
       label: 'Street Number',
       type: 'text',
-      className: 'col-span-12 lg:col-span-2',
+      col: 2,
       fullWidth: true,
       validation: yup.number().required('Street number is required')
     },
@@ -51,7 +51,7 @@ const App: FC = () => {
       name: 'postalCode',
       label: 'Postal Code',
       type: 'text',
-      className: 'col-span-12 lg:col-span-4',
+      col: 4,
       fullWidth: true,
       validation: yup.string().required('Postal code is required')
     },
@@ -61,7 +61,7 @@ const App: FC = () => {
       name: 'city',
       label: 'City',
       type: 'text',
-      className: 'col-span-12 lg:col-span-8',
+      col: 8,
       fullWidth: true,
       validation: yup.string().required('City is required')
     },
@@ -71,9 +71,17 @@ const App: FC = () => {
       name: 'country',
       label: 'Country',
       type: 'text',
-      className: 'col-span-12',
+      col: 12,
       fullWidth: true,
       validation: yup.string().required('Country is required')
+    },
+    {
+      component: 'submit',
+      name: 'submit',
+      value: 'Submit',
+      variant: 'primary',
+      col: 4,
+      fullWidth: true
     }
   ]
 
@@ -83,18 +91,18 @@ const App: FC = () => {
   }
 
   return (
-    <div className="flex h-screen flex-col justify-between lg:container lg:mx-auto">
-      <header className="flex pb-3 lg:mb-3 lg:border-b w-full items-center justify-between">
+    <div className={'flex h-screen flex-col justify-between lg:container lg:mx-auto'}>
+      <header className={'flex pb-3 lg:mb-3 lg:border-b w-full items-center justify-between'}>
         <img src={logo} className={'max-w-[120px]'} alt="logo"/>
         <h1 className={'text-5xl font-bold text-gray-500'}>
           React JSON Form Builder
         </h1>
       </header>
       <main>
-        <FormBuilder fields={fields} submitForm={handleSubmit} className={'mb-4 grid gap-4 md:grid-cols-12'}/>
+        <FormBuilder fields={fields} submitForm={handleSubmit}/>
       </main>
       <footer className={'text-center py-4'}>
-        <p className="text-sm">&copy; 2023 by Alexander Weigelt</p>
+        <p className={'text-sm'}>&copy; 2023 by Alexander Weigelt</p>
         <address>
           Contact <a href="mailto:webdesign@alexander-weigelt.de">webdesign@alexander-weigelt.de</a>
         </address>

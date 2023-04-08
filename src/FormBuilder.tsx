@@ -2,29 +2,54 @@ import React, { createElement, type FC, type FormHTMLAttributes, type ReactNode 
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { type NumberSchema, type StringSchema } from 'yup'
-import Button from './Button'
+import InputSubmit, { type InputSubmitProps } from './InputSubmit'
 import InputText, { type InputTextProps } from './InputText'
 import Select, { type SelectProps } from './Select'
+import classNames from 'classnames'
+
+type NumericRange<
+  START extends number,
+  END extends number,
+  ARR extends unknown[] = [],
+  ACC extends number = never
+> = ARR['length'] extends END
+  ? ACC | START | END
+  : NumericRange<START, END, [...ARR, 1], ARR[START] extends undefined ? ACC : ACC | ARR['length']>
 
 export type FormField = {
   component: string
   name: string
-  validation: StringSchema | NumberSchema
-} & (InputTextProps | SelectProps)
+  validation?: StringSchema | NumberSchema
+  col: NumericRange<1, 12>
+} & (InputTextProps | SelectProps | InputSubmitProps)
 
 type Props = {
   fields: FormField[]
   submitForm: (values: any) => void
-  buttonText?: string
 } & FormHTMLAttributes<HTMLFormElement>
 
 const Components: Record<string, any> = {
   input: InputText,
   select: Select,
-  button: Button
+  submit: InputSubmit
 }
 
-const FormBuilder: FC<Props> = ({ fields, submitForm, buttonText = 'Submit', className, ...props }) => {
+const FormBuilder: FC<Props> = ({ fields, submitForm, className, ...props }) => {
+  const columns = {
+    1: 'lg:col-span-1',
+    2: 'lg:col-span-2',
+    3: 'lg:col-span-3',
+    4: 'lg:col-span-4',
+    5: 'lg:col-span-5',
+    6: 'lg:col-span-6',
+    7: 'lg:col-span-7',
+    8: 'lg:col-span-8',
+    9: 'lg:col-span-9',
+    10: 'lg:col-span-10',
+    11: 'lg:col-span-11',
+    12: ''
+  }
+
   const initialValues = fields.reduce(
     (valuesObj, field) => ({ ...valuesObj, [field.name]: '' }),
     {}
@@ -40,7 +65,7 @@ const FormBuilder: FC<Props> = ({ fields, submitForm, buttonText = 'Submit', cla
     )
   )
 
-  const { values, handleChange, handleSubmit, isSubmitting } =
+  const { values, touched, errors, handleChange, handleSubmit, isSubmitting } =
     useFormik({
       initialValues,
       validationSchema,
@@ -52,7 +77,7 @@ const FormBuilder: FC<Props> = ({ fields, submitForm, buttonText = 'Submit', cla
     })
 
   const renderField = (field: FormField): ReactNode => {
-    const { component, validation, className, ...props } = field
+    const { component, validation, col, ...props } = field
     if (typeof Components[component] !== 'undefined') {
       return createElement(
         Components[component],
@@ -60,9 +85,12 @@ const FormBuilder: FC<Props> = ({ fields, submitForm, buttonText = 'Submit', cla
           key: field.id,
           onChange: handleChange,
           value: values[field.name as (keyof typeof values)],
+          disabled: isSubmitting,
+          error: touched[field.name as (keyof typeof touched)] && Boolean(errors[field.name as (keyof typeof errors)]),
+          message: touched[field.name as (keyof typeof touched)] && errors[field.name as (keyof typeof errors)],
           ...props
         }
-        // renderChildren(field.children)
+        // renderOptions(field.options)
       )
     }
     return createElement(
@@ -72,11 +100,12 @@ const FormBuilder: FC<Props> = ({ fields, submitForm, buttonText = 'Submit', cla
   }
 
   return (
-    <form onSubmit={handleSubmit} className={className}>
-      {fields.map((field, index) => <div key={index} className={field.className}>{renderField(field)}</div>)}
-      <Button type={'submit'} variant={'primary'} disabled={isSubmitting}>
-        {buttonText}
-      </Button>
+    <form onSubmit={handleSubmit} className={classNames(className, 'mb-4 grid gap-4 md:grid-cols-12')} {...props}>
+      {fields.map((field, index) => (
+        <div key={index} className={classNames('col-span-12', columns[field.col])}>
+          {renderField(field)}
+        </div>
+      ))}
     </form>
   )
 }
