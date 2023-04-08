@@ -1,5 +1,6 @@
 {
-  "name": "app",
+  "name": "react-form-builder",
+  "description": "Example for a lightweight React JSON Form Builder",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://alexanderweigelt.github.io/JSONFormBuilder/",

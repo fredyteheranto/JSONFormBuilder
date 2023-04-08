@@ -25,7 +25,7 @@ export type FormField = {
 
 type Props = {
   fields: FormField[]
-  submitForm: (values: any) => void
+  submitForm: (values: any) => Promise<void>
 } & FormHTMLAttributes<HTMLFormElement>
 
 const Components: Record<string, any> = {
@@ -70,7 +70,7 @@ const FormBuilder: FC<Props> = ({ fields, submitForm, className, ...props }) => 
       initialValues,
       validationSchema,
       onSubmit: async (values, { setSubmitting, resetForm }) => {
-        submitForm(values)
+        await submitForm(values)
         resetForm({ values: initialValues })
         setSubmitting(false)
       }

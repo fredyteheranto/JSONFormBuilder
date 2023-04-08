@@ -1,9 +1,11 @@
-import React, { type FC } from 'react'
+import React, { type FC, useState } from 'react'
 import logo from './logo.svg'
 import FormBuilder, { type FormField } from './FormBuilder'
 import * as yup from 'yup'
 
 const App: FC = () => {
+  const [result, setResult] = useState<Record<string, unknown>>({})
+
   const fields: FormField[] = [
     {
       component: 'input',
@@ -43,7 +45,7 @@ const App: FC = () => {
       type: 'text',
       col: 2,
       fullWidth: true,
-      validation: yup.number().required('Street number is required')
+      validation: yup.number().typeError('Please enter a valid number').required('Street number is required')
     },
     {
       component: 'input',
@@ -85,13 +87,14 @@ const App: FC = () => {
     }
   ]
 
-  const handleSubmit = (values: any): void => {
+  const handleSubmit = async (values: any): Promise<void> => {
     console.log(values)
+    setResult(values)
     // handle submit logic here
   }
 
   return (
-    <div className={'flex h-screen flex-col justify-between lg:container lg:mx-auto'}>
+    <div className={'flex h-screen flex-col justify-between lg:container lg:mx-auto px-3 lg:px-0'}>
       <header className={'flex pb-3 lg:mb-3 lg:border-b w-full items-center justify-between'}>
         <img src={logo} className={'max-w-[120px]'} alt="logo"/>
         <h1 className={'text-5xl font-bold text-gray-500'}>
@@ -99,13 +102,24 @@ const App: FC = () => {
         </h1>
       </header>
       <main>
+        <div className="flex p-4 text-sm text-gray-800 rounded-lg bg-gray-50 mb-10"
+             role="alert">
+          <svg aria-hidden="true" className="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20"
+               xmlns="http://www.w3.org/2000/svg">
+            <path fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                  clipRule="evenodd"></path>
+          </svg>
+          <span className="sr-only">Info</span>
+          <div>
+            <span className="font-medium">Note!</span> This form does not send any data. It is only a functional example of the implementation of the code.
+          </div>
+        </div>
         <FormBuilder fields={fields} submitForm={handleSubmit}/>
+        {Object.entries(result).map(([key, value]) => (<p key={key}><strong>{key}</strong>: <>{value}</></p>))}
       </main>
       <footer className={'text-center py-4'}>
         <p className={'text-sm'}>&copy; 2023 by Alexander Weigelt</p>
-        <address>
-          Contact <a href="mailto:webdesign@alexander-weigelt.de">webdesign@alexander-weigelt.de</a>
-        </address>
       </footer>
     </div>
   )
