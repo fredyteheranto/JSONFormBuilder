@@ -78,6 +78,14 @@ const App: FC = () => {
       validation: yup.string().required('Country is required')
     },
     {
+      component: 'checkbox',
+      id: 'accept-terms',
+      name: 'acceptTerms',
+      label: 'Country',
+      col: 12,
+      validation: yup.bool().oneOf([true], 'Accept terms and conditions')
+    },
+    {
       component: 'submit',
       name: 'submit',
       value: 'Submit',
@@ -112,7 +120,8 @@ const App: FC = () => {
           </svg>
           <span className="sr-only">Info</span>
           <div>
-            <span className="font-medium">Note!</span> This form does not send any data. It is only a functional example of the implementation of the code.
+            <span className="font-medium">Note!</span> This form does not send any data. It is only a functional example
+            of the implementation of the code.
           </div>
         </div>
         <FormBuilder fields={fields} submitForm={handleSubmit}/>

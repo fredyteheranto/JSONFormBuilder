@@ -1,11 +1,12 @@
 import React, { createElement, type FC, type FormHTMLAttributes, type ReactNode } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { type NumberSchema, type StringSchema } from 'yup'
+import { type BooleanSchema, type NumberSchema, type StringSchema } from 'yup'
 import InputSubmit, { type InputSubmitProps } from './InputSubmit'
 import InputText, { type InputTextProps } from './InputText'
 import Select, { type SelectProps } from './Select'
 import classNames from 'classnames'
+import Checkbox from './Checkbox'
 
 type NumericRange<
   START extends number,
@@ -19,7 +20,7 @@ type NumericRange<
 export type FormField = {
   component: string
   name: string
-  validation?: StringSchema | NumberSchema
+  validation?: StringSchema | NumberSchema | BooleanSchema
   col: NumericRange<1, 12>
 } & (InputTextProps | SelectProps | InputSubmitProps)
 
@@ -31,6 +32,7 @@ type Props = {
 const Components: Record<string, any> = {
   input: InputText,
   select: Select,
+  checkbox: Checkbox,
   submit: InputSubmit
 }
 
@@ -90,7 +92,6 @@ const FormBuilder: FC<Props> = ({ fields, submitForm, className, ...props }) => 
           message: touched[field.name as (keyof typeof touched)] && errors[field.name as (keyof typeof errors)],
           ...props
         }
-        // renderOptions(field.options)
       )
     }
     return createElement(
