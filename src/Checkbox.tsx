@@ -1,7 +1,7 @@
 import React, { forwardRef, type InputHTMLAttributes } from 'react'
 import classNames from 'classnames'
 
-type Props = {
+export type CheckboxProps = {
   id: string
   label?: string | null
   inline?: boolean
@@ -13,7 +13,7 @@ type Props = {
 
 type Ref = HTMLInputElement
 
-const Checkbox = forwardRef<Ref, Props>((props, ref) => {
+const Checkbox = forwardRef<Ref, CheckboxProps>((props, ref) => {
   const {
     id,
     label = null,

@@ -1,12 +1,12 @@
 import React, { createElement, type FC, type FormHTMLAttributes, type ReactNode } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import classNames from 'classnames'
 import { type BooleanSchema, type NumberSchema, type StringSchema } from 'yup'
 import InputSubmit, { type InputSubmitProps } from './InputSubmit'
 import InputText, { type InputTextProps } from './InputText'
 import Select, { type SelectProps } from './Select'
-import classNames from 'classnames'
-import Checkbox from './Checkbox'
+import Checkbox, { type CheckboxProps } from './Checkbox'
 
 type NumericRange<
   START extends number,
@@ -22,7 +22,7 @@ export type FormField = {
   name: string
   validation?: StringSchema | NumberSchema | BooleanSchema
   col: NumericRange<1, 12>
-} & (InputTextProps | SelectProps | InputSubmitProps)
+} & (InputTextProps | SelectProps | InputSubmitProps | CheckboxProps)
 
 type Props = {
   fields: FormField[]

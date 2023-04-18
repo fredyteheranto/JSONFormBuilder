@@ -2,8 +2,8 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import App from './App'
 
-test('renders learn react link', () => {
+test('renders page headline', () => {
   render(<App/>)
-  const linkElement = screen.getByText(/learn react/i)
-  expect(linkElement).toBeInTheDocument()
+  const headline = screen.getByText(/React JSON Form Builder/i)
+  expect(headline).toBeInTheDocument()
 })

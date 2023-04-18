@@ -81,9 +81,9 @@ const App: FC = () => {
       component: 'checkbox',
       id: 'accept-terms',
       name: 'acceptTerms',
-      label: 'Country',
+      label: 'Accept terms and conditions',
       col: 12,
-      validation: yup.bool().oneOf([true], 'Accept terms and conditions')
+      validation: yup.bool().oneOf([true], 'Please accept the terms and conditions')
     },
     {
       component: 'submit',
